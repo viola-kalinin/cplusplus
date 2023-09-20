@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>
 using namespace std;
-
+//simple io program for sum
 int main(){
   int a = 24;
   int b;
