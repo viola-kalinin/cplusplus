@@ -6,8 +6,8 @@ int main(int argc, char * argv[]) {
     string dna = argv[1]; 
     string complement;
 
-    for (char n: dna) {
-        switch (n) {
+    for (char letter: dna) {
+        switch (letter) {
             case 'A':
                 complement += 'T';
                 break;
