@@ -37,19 +37,19 @@ int Box::get_width(){
 Box :: Box (){
     width = 10; 
     height = 10; 
-    int sides [] = {10,10,10,10};
+    sides = new int[4] {10,10,10,10};
     count ++;
 }
 //overloaded constructor
 Box:: Box (int w, int h){
-    int sides [] = {w,w,h,h};
+    sides = new int[4] {w,w,h,h};
     width = w; 
     height = h;
     count ++;
 }
 //destructor
 Box :: ~Box(){
-    delete sides; 
+    delete [] sides; 
 }
 //used to access static variable
 int Box:: count; 
@@ -59,6 +59,7 @@ int Box:: count;
 class Triangle: public Box{
     public:
         double get_area(){return width* height * 0.5;}
+        //Triangle();
 };
 
 //main "driver"
