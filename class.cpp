@@ -1,24 +1,9 @@
 #include <iostream>
+#include <string>
+#include "class.h"
 using namespace std;
-//base class
-class Box {
-    private:
-        int *sides; 
-    protected: //so can be accessed by "child" classes
-        int width, height; 
-    public:
-        static int count; //one value accross instances
-        int get_width();
-        int get_height();
-        void set (int w, int h);
-        void display(); 
-        Box (); 
-        ~Box(); 
-        Box (int w, int h);
-        int get_area();
-};
-void Box :: set (int w, int h){
-    width = w; 
+void Box :: set (int x, int h){
+    width = x; 
     height = h;
 }
 void Box :: display (){
@@ -49,7 +34,7 @@ Box:: Box (int w, int h){
 }
 //destructor
 Box :: ~Box(){
-    delete [] sides; 
+    delete sides; 
 }
 //used to access static variable
 int Box:: count; 
@@ -58,9 +43,22 @@ int Box:: count;
 //inheritance example
 class Triangle: public Box{
     public:
-        double get_area(){return width* height * 0.5;}
-        //Triangle();
+        int get_area(){return width* height * 0.5;}
+        Triangle();
+        Triangle(int w, int h); 
+        using Box::display;
+        void display(string type); 
 };
+//use Box default constructor
+Triangle::Triangle():Box(){};
+
+//use Box overloaded constructor 
+Triangle::Triangle(int w, int h):Box(w,h){}; 
+
+//overload display() function
+void Triangle::display(string type){
+     cout << width << " " << height << " " << type <<endl; 
+}
 
 //main "driver"
 int main(){
@@ -72,12 +70,18 @@ int main(){
     cout << "2x2 box area: " << b.get_area() << endl;
     //displays static variable (how many boxes were created)
     cout << "Number of Boxes: " << Box::count << endl; 
-    Triangle c; 
-    cout << "Default Triangle area: " << c.get_area() << endl; // will override 
+    Triangle c (4,5); 
+    cout << "4*5 Triangle area: " << c.get_area() << endl; // will override 
     //will print out 3 because Triangle is technically also a box
     cout << "Number of Boxes: " << Box::count << endl;
-    // inherited from Box
-    c.display();
-    c.set(3,4); 
-    cout << "New Triangle area: " << c.get_area() << endl; 
+    // overloaded display function
+    c.display("isosceles");
+    //inherited display
+    c.display(); 
+
+    //box pointer to triangle object
+    Box* x = &c; 
+
+    cout << "box pointer to triangle object " <<x->get_area() << endl; 
+    //cout << "New Triangle area: " << c.get_area() << endl; 
 }
